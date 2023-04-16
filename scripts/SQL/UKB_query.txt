@@ -1,0 +1,81 @@
+### SQL Queries for UKB DKA and diabetes 
+## Date: 01/25/2023
+
+##### DKA ICD10
+
+### T1DKA
+### ICD10: E10.1 (Type 1 diabetes mellitus with ketoacidosis)
+### ICD10: E10.10 (Type 1 diabetes mellitus with ketoacidosis without coma)
+### ICD10: E10.11 (Type 1 diabetes mellitus with ketoacidosis with coma)
+
+### T2DKA
+### ICD10: E11.1 (Type 2 diabetes mellitus with ketoacidosis)
+### ICD10: E11.10 (Type 2 diabetes mellitus with ketoacidosis without coma)
+### ICD10: E11.11 (Type 2 diabetes mellitus with ketoacidosis with coma)
+
+SELECT hesin.eid,
+hesin.ins_index,
+epistart,
+admidate,
+diag_icd10
+FROM hesin JOIN hesin_diag USING(eid, ins_index)
+WHERE (diag_icd10 LIKE 'E101%' OR diag_icd10 LIKE 'E111%')
+
+##### saved to "DKA_UKB/ukb_data/ukb_ dka_icd10.txt"
+
+
+##### DKA ICD9
+
+### Unspecified
+### ICD9: 250.1 Diabetes with ketoacidosis 
+
+### T1DKA
+### ICD9: 250.11 (Diabetes with ketoacidosis, type I [juvenile type], not stated as uncontrolled)
+### ICD9: 250.13 (Diabetes with ketoacidosis, type I [juvenile type], uncontrolled)
+
+### T2DKA
+### ICD9: 250.10 (Diabetes with ketoacidosis, type II [juvenile type], not stated as uncontrolled)
+### ICD9: 250.12 (Diabetes with ketoacidosis, type II [juvenile type], uncontrolled)
+
+
+SELECT hesin.eid,
+hesin.ins_index,
+epistart,
+admidate,
+diag_icd9
+FROM hesin JOIN hesin_diag USING(eid, ins_index)
+WHERE (diag_icd9 LIKE '2501%')
+
+##### saved to "DKA_UKB/ukb_data/ukb_ dka_icd9.txt"
+
+
+##### Diabetes ICD10
+
+## E10 = Type 1 diabetes mellitus
+## E11 = Typ2 2 diabetes mellitus
+## E13 = Other specified diabetes mellitus
+## E14 = Unspecified diabetes mellitus
+
+
+SELECT hesin.eid,
+hesin.ins_index,
+epistart,
+admidate,
+diag_icd10
+FROM hesin JOIN hesin_diag USING(eid, ins_index)
+WHERE (diag_icd10 LIKE  'E10%' OR diag_icd10 LIKE  'E11%' OR diag_icd10 LIKE  'E13%' OR diag_icd10 LIKE  'E14%')
+
+
+##### Diabetes ICD9
+
+## 250 Diabetes mellitus
+
+SELECT hesin.eid,
+hesin.ins_index,
+epistart,
+admidate,
+diag_icd9
+FROM hesin JOIN hesin_diag USING(eid, ins_index)
+WHERE (diag_icd9 LIKE  '250%' )
+
+
